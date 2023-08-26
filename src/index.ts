@@ -1,6 +1,7 @@
 import http from "http";
 import cors from "cors";
 import morgan from "morgan";
+import config from "./config/env.config";
 import express, { Express, Request, Response } from "express";
 
 const app: Express = express();
@@ -19,9 +20,9 @@ app.all("*", (req: Request, res: Response) => {
 });
 
 // require.main === module && --- -> mandatory for tests.
-server.listen(4000, () => {
+server.listen(config.port, () => {
   console.log(
-    `⚡️[server]: Server started 🚀 running at http://localhost:4000`
+    `⚡️[server]: Server started 🚀 running at http://localhost:${config.port}`
   );
 });
 
