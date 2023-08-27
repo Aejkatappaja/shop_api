@@ -1,6 +1,8 @@
 import mongoose, { Model, Schema } from 'mongoose';
 import { ICategory } from 'types/category.type';
 
+export interface ICategoryModel extends ICategory, Document {}
+
 const categorySchema: Schema = new Schema({
   name: { type: String, required: true },
   products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
