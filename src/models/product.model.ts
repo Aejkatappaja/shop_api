@@ -12,6 +12,7 @@ const productSchema = new mongoose.Schema({
   quantity: { type: Number, required: true },
   description: { type: String, required: true },
   sku: { type: Number, required: true, default: SKU },
+  created: { type: Date, required: true, default: Date.now() },
 });
 
 const Product: Model<IProduct> = mongoose.model<IProduct>('Product', productSchema);
