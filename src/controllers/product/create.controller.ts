@@ -1,11 +1,6 @@
 import { Request, Response } from 'express';
 import { IProduct } from 'types/product.type';
-import {
-  CreateNewProduct,
-  MissingProductInfos,
-  ExistingProduct,
-  WrongProductQuantity,
-} from '../../services/product.service';
+import productService from '../../services/product.service';
 
 export const createProduct = async (
   req: Request,
@@ -14,11 +9,11 @@ export const createProduct = async (
   try {
     const productInfos: IProduct = req.body;
 
-    const missingProductInfos = await MissingProductInfos(productInfos);
+    const missingProductInfos = await productService.MissingInfos(productInfos);
 
-    const existingProduct = await ExistingProduct(productInfos);
+    const existingProduct = await productService.AlreadyExists(productInfos);
 
-    const wrongProductQuantity = await WrongProductQuantity(productInfos);
+    const wrongProductQuantity = await productService.WrongQuantity(productInfos);
 
     if (missingProductInfos) {
       return res.status(400).json({ message: 'You need to provide all the required informations' });
@@ -29,7 +24,7 @@ export const createProduct = async (
         message: 'Invalid product quantity. Quantity must be greater than or equal to 1.',
       });
     } else {
-      const newProduct = await CreateNewProduct(productInfos);
+      const newProduct = await productService.Create(productInfos);
       return res.status(201).json(newProduct);
     }
   } catch (error: unknown) {
