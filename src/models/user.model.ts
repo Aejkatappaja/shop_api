@@ -6,12 +6,12 @@ export interface IUsertModel extends IUser, Document {}
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  role: { type: String, required: false },
+  role: { type: String, enum: ['Customer', 'Admin'], required: true, default: 'Customer' },
   email: { type: String, required: true },
-  avatar: { type: String, required: true },
+  avatar: { type: String, required: false },
   created: { type: Date, required: true, default: Date.now() },
 });
 
-const Product: Model<IUser> = mongoose.model<IUser>('User', userSchema);
+const User: Model<IUser> = mongoose.model<IUser>('User', userSchema);
 
-export default Product;
+export default User;
