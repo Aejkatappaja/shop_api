@@ -1,10 +1,10 @@
 import http from 'http';
 import cors from 'cors';
 import morgan from 'morgan';
-import config from './config/env.config';
+import config from './configs/env.config';
 import express, { Express, Request, Response } from 'express';
 
-require('./config/db.config');
+require('./configs/db.config');
 
 const app: Express = express();
 app.use(express.json());
@@ -14,8 +14,10 @@ app.use(cors({ credentials: true }));
 const server = http.createServer(app);
 
 import productRouter from './routes/product';
+import userRouter from './routes/user';
 
 app.use(productRouter);
+app.use(userRouter);
 
 app.get('/', (req: Request, res: Response) => {
   return res.send('Welcome to my API !');
