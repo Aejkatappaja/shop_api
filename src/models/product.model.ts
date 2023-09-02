@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
   picture: { type: String, default: null },
   quantity: { type: Number, required: true },
   description: { type: String, required: true },
-  sku: { type: Number, required: true, default: SKU },
+  sku: { type: Number, required: true, default: SKU, unique: true },
   created: { type: Date, required: true, default: Date.now() },
 });
 
