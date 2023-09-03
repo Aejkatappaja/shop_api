@@ -35,11 +35,14 @@ export const MissingInfos = async (productInfos: IProduct): Promise<IProduct | b
   return false;
 };
 
+export const getProductId = (id: string): Promise<IProduct> => Product.findById(id);
+
 const productService = {
   Create,
   AlreadyExists,
   WrongQuantity,
   MissingInfos,
+  getProductId,
 };
 
 export default productService;
