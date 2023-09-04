@@ -37,12 +37,15 @@ export const MissingInfos = async (productInfos: IProduct): Promise<IProduct | b
 
 export const getProductId = (id: string): Promise<IProduct> => Product.findById(id);
 
+export const getAllProducts = async (): Promise<IProduct[]> => await Product.find().sort({ brand: 1 });
+
 const productService = {
   Create,
   AlreadyExists,
   WrongQuantity,
   MissingInfos,
   getProductId,
+  getAllProducts,
 };
 
 export default productService;
