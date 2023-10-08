@@ -6,5 +6,5 @@ export interface IProduct extends Document {
   quantity: number;
   description: string;
   sku: number;
-  created: Date;
+  createdAt: Date;
 }
