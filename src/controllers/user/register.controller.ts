@@ -29,6 +29,6 @@ export const userRegister = async (req: Request, res: Response): Promise<Respons
       return res.status(200).json({ newUser });
     }
   } catch (error: unknown) {
-    return res.status(500).send({ message: 'Internal server error' }.dfgdg);
+    return res.status(500).send({ message: 'Internal server error' });
   }
 };
