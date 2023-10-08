@@ -7,8 +7,11 @@ export const userRegister = async (req: Request, res: Response): Promise<Respons
     const userInfos: IUser = req.body;
 
     const missingUserInfos = await userService.MissingInfos(userInfos);
+
     const emailTaken = await userService.EmailTaken(userInfos);
+
     const validPassword = await userService.ValidPassword(userInfos);
+
     const encryptPassword = await userService.EncryptPassword(userInfos);
 
     if (missingUserInfos) {
@@ -26,6 +29,6 @@ export const userRegister = async (req: Request, res: Response): Promise<Respons
       return res.status(200).json({ newUser });
     }
   } catch (error: unknown) {
-    return res.status(500).send({ message: 'Internal server error' });
+    return res.status(500).send({ message: 'Internal server error' }.);
   }
 };
