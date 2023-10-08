@@ -13,6 +13,7 @@ export type AddressType = {
 export interface IUser extends Document {
   firstName: string;
   lastName: string;
+  password: string;
   role: RolesType;
   address: AddressType;
   email: string;
