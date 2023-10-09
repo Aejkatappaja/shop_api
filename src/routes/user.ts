@@ -10,5 +10,6 @@ userRouter.get('/admin-only', isAdmin, (req: Request, res: Response) => {
 });
 
 userRouter.post('/user/register', userRegister);
+userRouter.post('user/login');
 
 export default userRouter;
