@@ -14,7 +14,7 @@ export const Create = async (userInfos: IUser): Promise<IUser | null> => {
     const newUser = new User(userInfos);
     await newUser.save();
     return newUser;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error creating user:', error);
     throw error;
   }
@@ -28,7 +28,7 @@ export const MissingInfos = async (userInfos: IUser): Promise<boolean> => {
       return true;
     }
     return false;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error checking missing infos:', error);
     throw error;
   }
@@ -43,21 +43,26 @@ export const EmailTaken = async (userInfos: IUser): Promise<boolean> => {
       return true;
     }
     return false;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error checking email taken:', error);
     throw error;
   }
 };
 
 export const ValidPassword = async (userInfos: IUser): Promise<boolean> => {
-  const { password } = userInfos;
-  const regex = passwordRegex();
-  const isPasswordvalid = regex.test(password);
+  try {
+    const { password } = userInfos;
+    const regex = passwordRegex();
+    const isPasswordvalid = regex.test(password);
 
-  if (isPasswordvalid) {
-    return true;
+    if (isPasswordvalid) {
+      return true;
+    }
+    return false;
+  } catch (error: unknown) {
+    console.error('Error :', error);
+    throw error;
   }
-  return false;
 };
 
 export const EncryptPassword = async (userInfos: IUser): Promise<string> => {
@@ -65,13 +70,13 @@ export const EncryptPassword = async (userInfos: IUser): Promise<string> => {
     const { password } = userInfos;
     const passwordHash = bcrypt.hashSync(password, 10);
     return passwordHash;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error hashing password:', error);
     throw error;
   }
 };
 
-const userService = {
+const userRegisterService = {
   Create,
   MissingInfos,
   EmailTaken,
@@ -79,4 +84,4 @@ const userService = {
   EncryptPassword,
 };
 
-export default userService;
+export default userRegisterService;
