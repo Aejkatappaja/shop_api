@@ -1,6 +1,4 @@
-export type RolesType = {
-  role: 'Customer' | 'Admin';
-};
+export type RolesType = 'Customer' | 'Admin';
 
 export type AddressType = {
   country: string;
@@ -25,7 +23,8 @@ export interface IUserResponse {
   firstName: string;
   lastName: string;
   address: AddressType;
+  role: RolesType;
   email: string;
   avatar: string;
-  token: string;
+  token?: string;
 }
