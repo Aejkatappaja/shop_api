@@ -1,4 +1,4 @@
-import userLoginService from '../../services/user.login.service';
+import userLoginService from '../../database/services/user.login.service';
 
 import { IUser, IUserResponse } from '../../types/user.type';
 import { Request, Response } from 'express';
@@ -8,7 +8,12 @@ export const userLogin = async (req: Request, res: Response): Promise<Response<I
     const userInfos: IUser = req.body;
 
     const missingUserInfos = await userLoginService.MissingInfos(userInfos);
+
     const verifyUserExists = await userLoginService.VerifyUserExists(userInfos);
+
+    const userLogged = await userLoginService.Login(userInfos);
+
+    const verifiedPassword = await userLoginService.passwordVerification(userInfos, userLogged);
 
     if (missingUserInfos) {
       return res.status(400).json({ message: 'You need to provide all required informations' });
@@ -18,9 +23,12 @@ export const userLogin = async (req: Request, res: Response): Promise<Response<I
       return res.status(400).json({ message: 'There is a problem with provided informations' });
     }
 
-    const userLogged = await userLoginService.Login(userInfos);
-    if (userLogged) {
-      const { firstName, lastName, role, email, address, avatar } = userLogged;
+    if (!userLogged) {
+      return res.status(400).json({ message: 'There is a problem with your account informations' });
+    }
+
+    if (verifiedPassword) {
+      const { firstName, lastName, email, address, avatar, role } = userLogged;
       const userResponse: IUserResponse = {
         firstName,
         lastName,
