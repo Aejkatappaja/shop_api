@@ -1,6 +1,6 @@
 import { IProduct } from '../../types/product.type';
 import { Request, Response } from 'express';
-import productService from '../../services/product.service';
+import productService from '../../database/services/product.service';
 
 export const getProductById = async (
   req: Request,
