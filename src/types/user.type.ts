@@ -18,7 +18,7 @@ export interface IUser extends Document {
   address: AddressType;
   email: string;
   avatar: string;
-  created: Date;
+  createdAt: Date;
 }
 
 export interface IUserResponse {
