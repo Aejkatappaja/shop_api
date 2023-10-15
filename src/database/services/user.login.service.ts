@@ -2,6 +2,7 @@ import User from '../models/user.model';
 import { IUser, IUserResponse } from '../../types/user.type';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import config from '../../configs/env.config';
 
 export const Login = async (userInfos: IUser): Promise<IUser | null> => {
   try {
@@ -50,7 +51,7 @@ export const VerifyUserExists = async (userInfos: IUser): Promise<boolean> => {
 export const passwordVerification = async (userInfos: IUser, loggedUser: IUser): Promise<boolean> => {
   try {
     const { password } = userInfos;
-    const verifiedPassword = await bcrypt.compareSync(password, loggedUser.password);
+    const verifiedPassword = bcrypt.compareSync(password, loggedUser.password);
     if (!verifiedPassword) {
       return false;
     }
@@ -63,8 +64,9 @@ export const passwordVerification = async (userInfos: IUser, loggedUser: IUser):
 
 export const generateToken = async (userInfos: IUser) => {
   try {
-    const { role } = userInfos;
-    const token = await jwt.sign({ role }, 'secret', { expiresIn: '1d' });
+    const { SECRET } = config;
+    // const { role } = userInfos;
+    const token = jwt.sign({ user: userInfos }, SECRET, { expiresIn: '1d' });
     return token;
   } catch (error) {
     console.error('Error:', error);
@@ -74,13 +76,14 @@ export const generateToken = async (userInfos: IUser) => {
 
 export const userResponse = async (userLogged: IUser, token: string): Promise<IUserResponse | null> => {
   try {
-    const { firstName, lastName, email, address, avatar } = userLogged;
+    const { firstName, lastName, email, address, avatar, role } = userLogged;
     const userResponse: IUserResponse = {
       firstName,
       lastName,
       address,
       email,
       avatar,
+      role,
       token,
     };
     return userResponse;
