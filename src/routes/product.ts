@@ -8,6 +8,6 @@ const productRouter = express.Router();
 
 productRouter.post('/product/create', isAdmin, createProduct);
 productRouter.get('/product/stock', getProducts);
-productRouter.get('/product/:id', getProductById); //add (\\d+) regexp to secure route with only number as passed params.
+productRouter.get('/product/:id', getProductById);
 
 export default productRouter;
