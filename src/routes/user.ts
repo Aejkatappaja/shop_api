@@ -7,6 +7,9 @@ import { userLogin } from '../controllers/user/login.controller';
 const userRouter = express.Router();
 
 userRouter.get('/user/admin-only', isAdmin, (req: Request, res: Response) => {
+  const user = req;
+  console.log('user', user);
+
   return res.json({ message: 'Welcome, admin!' });
 });
 
