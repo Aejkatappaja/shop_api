@@ -24,8 +24,8 @@ export interface IUser extends Document {
 export interface IUserResponse {
   firstName: string;
   lastName: string;
-  role: RolesType;
   address: AddressType;
   email: string;
   avatar: string;
+  token: string;
 }

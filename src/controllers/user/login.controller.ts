@@ -2,6 +2,7 @@ import userLoginService from '../../database/services/user.login.service';
 
 import { IUser, IUserResponse } from '../../types/user.type';
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 export const userLogin = async (req: Request, res: Response): Promise<Response<IUser, Record<string, unknown>>> => {
   try {
@@ -26,16 +27,17 @@ export const userLogin = async (req: Request, res: Response): Promise<Response<I
     if (!userLogged) {
       return res.status(400).json({ message: 'There is a problem with your account informations' });
     }
+    const token = jwt.sign({ role: userLogged.role }, 'secret', { expiresIn: '1d' });
 
     if (verifiedPassword) {
-      const { firstName, lastName, email, address, avatar, role } = userLogged;
+      const { firstName, lastName, email, address, avatar } = userLogged;
       const userResponse: IUserResponse = {
         firstName,
         lastName,
-        role,
         address,
         email,
         avatar,
+        token,
       };
       return res.status(200).json(userResponse);
     } else {
