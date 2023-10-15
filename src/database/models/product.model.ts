@@ -1,6 +1,6 @@
 import mongoose, { Model } from 'mongoose';
 import { IProduct } from 'types/product.type';
-import SKU from '../utils/sku-generator';
+import SKU from '../../utils/sku-generator';
 
 export interface IProductModel extends IProduct, Document {}
 

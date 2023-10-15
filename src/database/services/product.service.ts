@@ -1,5 +1,5 @@
 import Product from '../models/product.model';
-import { IProduct } from '../types/product.type';
+import { IProduct } from '../../types/product.type';
 
 export const Create = async (productInfos: IProduct): Promise<IProduct> => {
   try {

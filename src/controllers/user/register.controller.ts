@@ -1,4 +1,4 @@
-import userRegisterService from '../../services/user.register.service';
+import userRegisterService from '../../database/services/user.register.service';
 import { IUser } from '../../types/user.type';
 import { Request, Response } from 'express';
 

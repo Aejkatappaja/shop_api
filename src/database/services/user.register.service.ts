@@ -1,6 +1,6 @@
 import User from '../models/user.model';
-import { IUser } from '../types/user.type';
-import passwordRegex from '../utils/password-regex';
+import { IUser } from '../../types/user.type';
+import passwordRegex from '../../utils/password-regex';
 import bcrypt from 'bcrypt';
 
 export type PromiseGenericType = Promise<boolean>;
