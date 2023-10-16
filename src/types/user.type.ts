@@ -20,6 +20,7 @@ export interface IUser extends Document {
 }
 
 export interface IUserResponse {
+  _id?: string;
   firstName: string;
   lastName: string;
   address: AddressType;

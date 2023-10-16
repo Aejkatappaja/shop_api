@@ -26,9 +26,8 @@ export const userLogin = async (req: Request, res: Response): Promise<Response<I
     if (verifiedPassword) {
       const createToken = await userLoginService.generateToken(userLogged);
       if (createToken) {
-        return res.status(200).json('Welcome');
+        return res.status(200).json({ token: createToken });
       }
-      // const userResponse = await userLoginService.userResponse(userLogged, createToken);
     } else {
       return res.status(409).json({ message: 'You provided wrong informations' });
     }

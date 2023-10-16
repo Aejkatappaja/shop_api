@@ -62,11 +62,12 @@ export const passwordVerification = async (userInfos: IUser, loggedUser: IUser):
   }
 };
 
-export const generateToken = async (userInfos: IUser) => {
+export const generateToken = async (userInfos: IUserResponse): Promise<string> => {
   try {
     const { SECRET } = config;
-    // const { role } = userInfos;
-    const token = jwt.sign({ user: userInfos }, SECRET, { expiresIn: '1d' });
+
+    const token = jwt.sign({ id: userInfos._id.toString() }, SECRET, { expiresIn: '30d' });
+
     return token;
   } catch (error) {
     console.error('Error:', error);

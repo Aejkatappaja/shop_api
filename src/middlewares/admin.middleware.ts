@@ -1,9 +1,9 @@
 import config from '../configs/env.config';
 import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { IUserResponse } from '../types/user.type';
+import User from '../database/models/user.model';
 
-export const isAdmin = (req: Request & { user?: IUserResponse }, res: Response, next: NextFunction): void => {
+export const isAdmin = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const { SECRET } = config;
     const token = req.headers.authorization;
@@ -13,7 +13,7 @@ export const isAdmin = (req: Request & { user?: IUserResponse }, res: Response, 
 
     const accessToken = token.split(' ')[1];
 
-    jwt.verify(accessToken, SECRET, (err, decoded: JwtPayload | string) => {
+    jwt.verify(accessToken, SECRET, async (err, decoded: JwtPayload | string): Promise<NextFunction | Response> => {
       if (err) {
         return res.status(401).json({ message: 'Token is invalid' });
       }
@@ -21,12 +21,11 @@ export const isAdmin = (req: Request & { user?: IUserResponse }, res: Response, 
       if (typeof decoded === 'string') {
         return;
       } else {
-        const user = (decoded as JwtPayload).user;
+        const user = await User.findById((decoded as JwtPayload).id);
 
-        if (user) {
-          delete user.password;
-          req.user = user;
-        }
+        // if (user) {
+        //   req.user = user;
+        // }
 
         if (user.role !== 'Admin') {
           return res.status(403).json({ message: 'Insufficient permissions' });
