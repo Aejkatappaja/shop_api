@@ -1,12 +1,11 @@
 import User from '../models/user.model';
-import { IUser, IUserResponse } from '../../types/user.type';
+import { IUser, IUserLogin } from '../../types/user.type';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import config from '../../configs/env.config';
+import { tokenGeneration } from '../../middlewares/auth.middleware';
 
-export const Login = async (userInfos: IUser): Promise<IUser | null> => {
+export const UserSuccessfullyRetrieved = async (emailProvided: IUserLogin): Promise<IUser | null> => {
   try {
-    const { email } = userInfos;
+    const { email } = emailProvided;
 
     const loggedUser = await User.findOne({ email });
 
@@ -20,9 +19,9 @@ export const Login = async (userInfos: IUser): Promise<IUser | null> => {
   }
 };
 
-export const MissingInfos = async (userInfos: IUser): Promise<boolean> => {
+export const MissingProvidedInformations = async (LoginInformationsProvided: IUserLogin): Promise<boolean> => {
   try {
-    const { email, password } = userInfos;
+    const { email, password } = LoginInformationsProvided;
 
     if (!email || !password) {
       return true;
@@ -34,24 +33,25 @@ export const MissingInfos = async (userInfos: IUser): Promise<boolean> => {
   }
 };
 
-export const VerifyUserExists = async (userInfos: IUser): Promise<boolean> => {
+export const UserExists = async (email: string): Promise<boolean> => {
   try {
-    const { email } = userInfos;
     const ExistingUser = await User.findOne({ email });
     if (!ExistingUser) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   } catch (error: unknown) {
     console.error('Error checking missing infos:', error);
     throw error;
   }
 };
 
-export const passwordVerification = async (userInfos: IUser, loggedUser: IUser): Promise<boolean> => {
+export const PasswordVerification = async (
+  passwordProvidedByUser: string,
+  realUserPassword: string,
+): Promise<boolean> => {
   try {
-    const { password } = userInfos;
-    const verifiedPassword = bcrypt.compareSync(password, loggedUser.password);
+    const verifiedPassword = bcrypt.compareSync(passwordProvidedByUser, realUserPassword);
     if (!verifiedPassword) {
       return false;
     }
@@ -62,45 +62,42 @@ export const passwordVerification = async (userInfos: IUser, loggedUser: IUser):
   }
 };
 
-export const generateToken = async (userInfos: IUserResponse): Promise<string> => {
+export const GenerateToken = async (id: string): Promise<string> => {
   try {
-    const { SECRET } = config;
-
-    const token = jwt.sign({ id: userInfos._id.toString() }, SECRET, { expiresIn: '30d' });
-
-    return token;
+    const token = tokenGeneration(id);
+    return token as string;
   } catch (error) {
     console.error('Error:', error);
     throw error;
   }
 };
 
-export const userResponse = async (userLogged: IUser, token: string): Promise<IUserResponse | null> => {
-  try {
-    const { firstName, lastName, email, address, avatar, role } = userLogged;
-    const userResponse: IUserResponse = {
-      firstName,
-      lastName,
-      address,
-      email,
-      avatar,
-      role,
-      token,
-    };
-    return userResponse;
-  } catch (error) {
-    console.error('Error during credentials verification infos:', error);
-    throw error;
-  }
-};
+// export const userResponse = async (userLogged: IUser, token: string): Promise<IUserResponse | null> => {
+//   try {
+//     const { firstName, lastName, email, address, avatar, role } = userLogged;
+//     const userResponse: IUserResponse = {
+//       firstName,
+//       lastName,
+//       address,
+//       email,
+//       avatar,
+//       role,
+//       token,
+//     };
+//     return userResponse;
+//   } catch (error) {
+//     console.error('Error during credentials verification infos:', error);
+//     throw error;
+//   }
+// };
 
 const userLoginService = {
-  Login,
-  MissingInfos,
-  VerifyUserExists,
-  passwordVerification,
-  generateToken,
-  userResponse,
+  UserSuccessfullyRetrieved,
+  MissingProvidedInformations,
+  UserExists,
+  PasswordVerification,
+  GenerateToken,
+  // userResponse,
 };
 
 export default userLoginService;
