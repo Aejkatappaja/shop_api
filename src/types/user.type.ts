@@ -8,30 +8,17 @@ export type AddressType = {
   zip_code: string;
   additional_information: string;
 };
-export interface IUser extends Document {
-  _id?: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  role: RolesType;
-  address: AddressType;
-  email: string;
-  avatar: string;
-  createdAt: Date;
-}
-
 export interface IUserLogin {
   email: string;
   password: string;
 }
 
-export interface IUserResponse {
+export interface IUser extends Document, IUserLogin {
   _id?: string;
   firstName: string;
   lastName: string;
-  address: AddressType;
   role: RolesType;
-  email: string;
+  address: AddressType;
   avatar: string;
-  token?: string;
+  createdAt: Date;
 }
