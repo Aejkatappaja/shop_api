@@ -1,10 +1,10 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../configs/env.config';
-import User from 'database/models/user.model';
+import User from '../database/models/user.model';
 
 const { SECRET } = config;
 
-export const generateToken = (id: string) => {
+export const tokenGeneration = (id: string) => {
   try {
     if (!id) {
       return false;
