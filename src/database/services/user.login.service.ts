@@ -1,6 +1,6 @@
 import User from '../models/user.model';
 import { IUser, IUserLogin } from '../../types/user.type';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import { tokenGeneration } from '../../middlewares/auth.middleware';
 
 export const UserSuccessfullyRetrieved = async (emailProvided: IUserLogin): Promise<IUser | null> => {
@@ -46,21 +46,21 @@ export const UserExists = async (email: string): Promise<boolean> => {
   }
 };
 
-export const PasswordVerification = async (
-  passwordProvidedByUser: string,
-  realUserPassword: string,
-): Promise<boolean> => {
-  try {
-    const verifiedPassword = bcrypt.compareSync(passwordProvidedByUser, realUserPassword);
-    if (!verifiedPassword) {
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.error('Error during credentials verification infos:', error);
-    throw error;
-  }
-};
+// export const PasswordVerification = async (
+//   passwordProvidedByUser: string,
+//   realUserPassword: string,
+// ): Promise<boolean> => {
+//   try {
+//     const verifiedPassword = bcrypt.compareSync(passwordProvidedByUser, realUserPassword);
+//     if (!verifiedPassword) {
+//       return false;
+//     }
+//     return true;
+//   } catch (error) {
+//     console.error('Error during credentials verification infos:', error);
+//     throw error;
+//   }
+// };
 
 export const GenerateToken = async (id: string): Promise<string> => {
   try {
@@ -95,7 +95,7 @@ const userLoginService = {
   UserSuccessfullyRetrieved,
   MissingProvidedInformations,
   UserExists,
-  PasswordVerification,
+  // PasswordVerification,
   GenerateToken,
   // userResponse,
 };
