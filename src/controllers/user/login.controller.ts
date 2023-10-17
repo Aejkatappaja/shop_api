@@ -1,31 +1,30 @@
-import { PasswordVerification } from '../../database/services/user/login/password-verification';
-import userLoginService from '../../database/services/user.login.service';
-
 import { IUserLogin } from '../../types/user.type';
 import { Request, Response } from 'express';
+import user_login_services from '../../database/services/user/login';
 
 export const userLogin = async (req: Request, res: Response): Promise<Response<string>> => {
   try {
     const userInfos: IUserLogin = req.body;
 
-    const requiredInformationsMissing = await userLoginService.MissingProvidedInformations(userInfos);
+    const requiredInformationsMissing = await user_login_services.missingProvidedInformations(userInfos);
     if (requiredInformationsMissing) {
       return res.status(400).json({ message: 'You need to provide all required informations' });
     }
 
-    const verifyUserExists = await userLoginService.UserExists(userInfos.email);
+    const verifyUserExists = await user_login_services.userExists(userInfos.email);
     if (!verifyUserExists) {
       return res.status(400).json({ message: 'There is a problem with provided informations' });
     }
 
-    const userLogged = await userLoginService.UserSuccessfullyRetrieved(userInfos);
+    const userLogged = await user_login_services.userSuccessfullyRetrieved(userInfos);
     if (!userLogged) {
       return res.status(400).json({ message: 'There is a problem with your account informations' });
     }
 
-    const verifiedPassword = await PasswordVerification(userInfos.password, userLogged.password);
-    if (verifiedPassword) {
-      const createToken = await userLoginService.GenerateToken(userLogged._id);
+    const passwordMatches = await user_login_services.passwordVerification(userInfos.password, userLogged.password);
+
+    if (passwordMatches) {
+      const createToken = await user_login_services.generateToken(userLogged._id);
       if (createToken) {
         return res.status(200).json({ token: createToken });
       }
