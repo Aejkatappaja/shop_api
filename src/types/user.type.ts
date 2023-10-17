@@ -9,6 +9,7 @@ export type AddressType = {
   additional_information: string;
 };
 export interface IUser extends Document {
+  _id?: string;
   firstName: string;
   lastName: string;
   password: string;
@@ -17,6 +18,11 @@ export interface IUser extends Document {
   email: string;
   avatar: string;
   createdAt: Date;
+}
+
+export interface IUserLogin {
+  email: string;
+  password: string;
 }
 
 export interface IUserResponse {
