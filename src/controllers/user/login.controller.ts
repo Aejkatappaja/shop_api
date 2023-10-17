@@ -1,3 +1,4 @@
+import { PasswordVerification } from '../../database/services/user/login/password-verification';
 import userLoginService from '../../database/services/user.login.service';
 
 import { IUserLogin } from '../../types/user.type';
@@ -22,7 +23,7 @@ export const userLogin = async (req: Request, res: Response): Promise<Response<s
       return res.status(400).json({ message: 'There is a problem with your account informations' });
     }
 
-    const verifiedPassword = await userLoginService.PasswordVerification(userInfos.password, userLogged.password);
+    const verifiedPassword = await PasswordVerification(userInfos.password, userLogged.password);
     if (verifiedPassword) {
       const createToken = await userLoginService.GenerateToken(userLogged._id);
       if (createToken) {
