@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-export const PasswordVerification = async (
+export const passwordVerification = async (
   passwordProvidedByUser: string,
   realUserPassword: string,
 ): Promise<boolean> => {
