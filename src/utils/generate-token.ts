@@ -1,4 +1,4 @@
-import { tokenGeneration } from '../../../../middlewares/auth.middleware';
+import { tokenGeneration } from '../middlewares/auth.middleware';
 
 export const generateToken = async (id: string): Promise<string> => {
   try {
