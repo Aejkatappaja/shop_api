@@ -1,6 +1,6 @@
 import { IUserLogin } from 'types/user.type';
 
-export const missingProvidedInformations = async (LoginInformationsProvided: IUserLogin): Promise<boolean> => {
+export const missingRequiredInformations = async (LoginInformationsProvided: IUserLogin): Promise<boolean> => {
   try {
     const { email, password } = LoginInformationsProvided;
 

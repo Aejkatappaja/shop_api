@@ -1,4 +1,4 @@
-import User from '../../../../database/models/user.model';
+import User from '../../../models/user.model';
 
 export const userExists = async (email: string): Promise<boolean> => {
   try {

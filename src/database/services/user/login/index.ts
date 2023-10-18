@@ -1,11 +1,11 @@
-import { userExists } from './existing-user';
+import { userExists } from './user-existence-verification';
 import { passwordVerification } from './password-verification';
 import { userSuccessfullyRetrieved } from './retrieve-user';
-import { missingProvidedInformations } from './verifying-infos';
+import { missingRequiredInformations } from './provided-credentials-verification';
 
 const user_login_services = {
   userExists,
-  missingProvidedInformations,
+  missingRequiredInformations,
   userSuccessfullyRetrieved,
   passwordVerification,
 };
