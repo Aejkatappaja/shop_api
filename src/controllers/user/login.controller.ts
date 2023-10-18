@@ -1,6 +1,7 @@
 import { IUserLogin } from '../../types/user.type';
 import { Request, Response } from 'express';
 import user_login_services from '../../database/services/user/login';
+import { generateToken } from '../../utils/generate-token';
 
 export const userLogin = async (req: Request, res: Response): Promise<Response<string>> => {
   try {
@@ -24,7 +25,7 @@ export const userLogin = async (req: Request, res: Response): Promise<Response<s
     const passwordMatches = await user_login_services.passwordVerification(userInfos.password, userLogged.password);
 
     if (passwordMatches) {
-      const createToken = await user_login_services.generateToken(userLogged._id);
+      const createToken = await generateToken(userLogged._id);
       if (createToken) {
         return res.status(200).json({ token: createToken });
       }
