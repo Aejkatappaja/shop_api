@@ -3,12 +3,6 @@ import { IUser } from '../../types/user.type';
 import passwordRegex from '../../utils/password-regex';
 import bcrypt from 'bcrypt';
 
-export type PromiseGenericType = Promise<boolean>;
-
-export type PromiseUserType = Promise<IUser | null>;
-
-export type PromisePasswordType = Promise<string>;
-
 export const Create = async (userInfos: IUser): Promise<IUser | null> => {
   try {
     const newUser = new User(userInfos);
