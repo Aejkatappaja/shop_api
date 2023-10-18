@@ -1,3 +1,4 @@
+import { encryptPassword } from '../../utils/encrypt-password';
 import userRegisterService from '../../database/services/user.register.service';
 import { IUser } from '../../types/user.type';
 import { Request, Response } from 'express';
@@ -8,24 +9,22 @@ export const userRegister = async (req: Request, res: Response): Promise<Respons
 
     const missingUserInfos = await userRegisterService.MissingInfos(userInfos);
 
-    const emailTaken = await userRegisterService.EmailTaken(userInfos);
-
-    const validPassword = await userRegisterService.ValidPassword(userInfos);
-
-    const encryptPassword = await userRegisterService.EncryptPassword(userInfos);
-
     if (missingUserInfos) {
       return res.status(400).json({ message: 'You need to provide all required informations' });
     }
+
+    const emailTaken = await userRegisterService.EmailTaken(userInfos);
     if (emailTaken) {
       return res.status(409).json({ message: 'Email already used' });
     } else {
+      const validPassword = await userRegisterService.ValidPassword(userInfos);
+      const passwordEncrypt = await encryptPassword(userInfos.password);
       if (validPassword) {
-        userInfos.password = encryptPassword;
+        userInfos.password = passwordEncrypt;
       }
 
-      const newUser = await userRegisterService.Create(userInfos);
-      return res.status(200).json({ newUser });
+      await userRegisterService.Create(userInfos);
+      return res.status(200).json({ message: 'Account successfully created!' });
     }
   } catch (error: unknown) {
     return res.status(500).send({ message: 'Internal server error' });
