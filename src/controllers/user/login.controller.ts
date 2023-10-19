@@ -17,7 +17,7 @@ export const userLogin = async (req: Request, res: Response): Promise<Response<s
       return res.status(400).json({ message: 'There is a problem with provided informations' });
     }
 
-    const userSuccessfullyRetrieved = await user_login_services.userSuccessfullyRetrieved(userInfos);
+    const userSuccessfullyRetrieved = await user_login_services.userSuccessfullyRetrieved(userInfos.email);
     if (!userSuccessfullyRetrieved) {
       return res.status(400).json({ message: 'There is a problem with your account informations' });
     }

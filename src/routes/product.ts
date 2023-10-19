@@ -7,7 +7,7 @@ import { isAdmin } from '../middlewares/admin.middleware';
 const productRouter = express.Router();
 
 productRouter.post('/product/create', isAdmin, createProduct);
-productRouter.get('/product/stock', getProducts);
+productRouter.get('/products', getProducts);
 productRouter.get('/product/:id', getProductById);
 
 export default productRouter;

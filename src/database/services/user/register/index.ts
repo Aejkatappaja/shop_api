@@ -1,7 +1,7 @@
-import { passwordFormatVerification } from './password-format-verification';
-import { missingRequiredInformations } from './provided-credentials-verification';
-import { newUserCreation } from './user-creation';
-import { emailAvailable } from './email-available-verification';
+import { passwordFormatVerification } from './verification-password-format';
+import { missingRequiredInformations } from './verification-credentials';
+import { newUserCreation } from './creation-user';
+import { emailAvailable } from './verification-email-availaibility';
 
 const user_register_services = {
   missingRequiredInformations,

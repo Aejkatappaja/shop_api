@@ -1,16 +1,14 @@
 import User from '../../../../database/models/user.model';
-import { IUserLogin, IUser } from '../../../../types/user.type';
+import { IUser } from '../../../../types/user.type';
 
-export const userSuccessfullyRetrieved = async (emailProvided: IUserLogin): Promise<IUser | null> => {
+export const userSuccessfullyRetrieved = async (email: string): Promise<IUser | null> => {
   try {
-    const { email } = emailProvided;
+    const getUser = await User.findOne({ email });
 
-    const loggedUser = await User.findOne({ email });
-
-    if (!loggedUser) {
+    if (!getUser) {
       return null;
     }
-    return loggedUser;
+    return getUser;
   } catch (error: unknown) {
     console.error('Error login user:', error);
     throw error;

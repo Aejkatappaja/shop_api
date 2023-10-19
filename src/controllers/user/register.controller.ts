@@ -16,7 +16,7 @@ export const userRegister = async (req: Request, res: Response): Promise<Respons
 
     const emailAvailable = await user_register_services.emailAvailable(email);
     if (!emailAvailable) {
-      return res.status(409).json({ message: 'Email already used' });
+      return res.status(409).json({ message: 'There is a problem with provided credentials' });
     } else {
       const correctPasswordFormat = await user_register_services.passwordFormatVerification(userInfos.password);
       const passwordEncrypt = await encryptPassword(userInfos.password);

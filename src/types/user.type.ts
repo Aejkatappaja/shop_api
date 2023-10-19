@@ -1,4 +1,7 @@
-export type RolesType = 'Customer' | 'Admin';
+export interface IUserLogin {
+  email: string;
+  password: string;
+}
 
 export type AddressType = {
   country: string;
@@ -8,10 +11,8 @@ export type AddressType = {
   zip_code: string;
   additional_information: string;
 };
-export interface IUserLogin {
-  email: string;
-  password: string;
-}
+
+export type RolesType = 'Customer' | 'Admin';
 
 export interface IUser extends Document, IUserLogin {
   _id?: string;

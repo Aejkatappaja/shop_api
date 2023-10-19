@@ -1,7 +1,7 @@
-import { userExists } from './user-existence-verification';
-import { passwordVerification } from './password-verification';
+import { userExists } from './verification-user-existence';
+import { passwordVerification } from './verification-password';
 import { userSuccessfullyRetrieved } from './retrieve-user';
-import { missingRequiredInformations } from './provided-credentials-verification';
+import { missingRequiredInformations } from './verification-credentials';
 
 const user_login_services = {
   userExists,
