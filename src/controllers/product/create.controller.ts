@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { IProduct } from 'types/product.type';
-import productService from '../../database/services/product.service';
+import { product_create_services } from '../../database/services/product';
 
 export const createProduct = async (
   req: Request,
@@ -9,23 +9,30 @@ export const createProduct = async (
   try {
     const productInfos: IProduct = req.body;
 
-    const missingProductInfos = await productService.MissingInfos(productInfos);
+    const { name, quantity } = productInfos;
 
-    const existingProduct = await productService.AlreadyExists(productInfos);
+    const missingRequiredInformation = await product_create_services.missingRequiredInformation(productInfos);
 
-    const wrongProductQuantity = await productService.WrongQuantity(productInfos);
-
-    if (missingProductInfos) {
+    if (missingRequiredInformation) {
       return res.status(400).json({ message: 'You need to provide all the required informations' });
-    } else if (existingProduct) {
+    }
+
+    const productAlreadyExists = await product_create_services.productAlreadyExists(name);
+
+    if (productAlreadyExists) {
       return res.status(409).json({ message: 'Product with the same name already exists!' });
-    } else if (wrongProductQuantity) {
+    }
+
+    const wrongQuantity = await product_create_services.wrongQuantity(quantity);
+
+    if (wrongQuantity) {
       return res.status(400).json({
         message: 'Invalid product quantity. Quantity must be greater than or equal to 1.',
       });
     } else {
-      const newProduct = await productService.Create(productInfos);
-      return res.status(201).json(newProduct);
+      const newProductCreation = await product_create_services.newProductCreation(productInfos);
+
+      return res.status(201).json(newProductCreation);
     }
   } catch (error: unknown) {
     console.error(error);

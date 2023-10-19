@@ -1,13 +1,13 @@
 import { IProduct } from '../../types/product.type';
 import { Request, Response } from 'express';
-import productService from '../../database/services/product.service';
+import { product_get_all_services } from '../../database/services/product';
 
 export const getProducts = async (
   req: Request,
   res: Response,
 ): Promise<Response<IProduct[], Record<string, unknown>>> => {
   try {
-    const products = await productService.getAllProducts();
+    const products = await product_get_all_services.getAllProducts();
 
     if (!products || products.length === 0) {
       return res.status(404).json({ message: 'No products found in DB' });
