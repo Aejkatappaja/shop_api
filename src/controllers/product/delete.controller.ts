@@ -17,11 +17,11 @@ export const deleteProduct = async (
     if (!product) {
       return res.status(401).json({ message: 'Product not found!' });
     } else {
-      const productDeleted = await product_delete_by_id_services.deleteProduct(productId);
-      if (productDeleted) {
-        return res.status(200).json({ message: 'Product successfully deleted!' });
+      const deletedProduct = await product_delete_by_id_services.deleteProduct(productId);
+      if (!deletedProduct) {
+        return res.status(401).json({ message: 'Error during product deletion process.' });
       } else {
-        return res.status(400).json({ message: 'Error during product deletion process!' });
+        return res.status(200).json({ message: 'Product successfully deleted!' });
       }
     }
   } catch (error: unknown) {

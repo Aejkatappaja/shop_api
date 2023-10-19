@@ -34,9 +34,14 @@ export const createProduct = async (
         message: 'Invalid product quantity. Quantity must be greater than or equal to 1.',
       });
     } else {
-      const newProductCreation = await product_create_services.newProductCreation(productInfos);
-
-      return res.status(201).json(newProductCreation);
+      const newProductCreated = await product_create_services.newProductCreation(productInfos);
+      if (newProductCreated) {
+        return res.status(201).json(newProductCreated);
+      } else {
+        return res.status(400).json({
+          message: 'Error during product creation process.',
+        });
+      }
     }
   } catch (error: unknown) {
     console.error(error);

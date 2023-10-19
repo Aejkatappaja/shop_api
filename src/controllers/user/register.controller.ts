@@ -19,13 +19,18 @@ export const userRegister = async (req: Request, res: Response): Promise<Respons
       return res.status(409).json({ message: 'There is a problem with provided credentials' });
     } else {
       const correctPasswordFormat = await user_register_services.passwordFormatVerification(userInfos.password);
-      const passwordEncrypt = await encryptPassword(userInfos.password);
+
       if (correctPasswordFormat) {
+        const passwordEncrypt = await encryptPassword(userInfos.password);
         userInfos.password = passwordEncrypt;
       }
 
-      await user_register_services.newUserCreation(userInfos);
-      return res.status(200).json({ message: 'Account successfully created!' });
+      const newUserCreated = await user_register_services.newUserCreation(userInfos);
+      if (!newUserCreated) {
+        return res.status(409).json({ message: 'problem during user creation process' });
+      } else {
+        return res.status(200).json({ message: 'Account successfully created!' });
+      }
     }
   } catch (error: unknown) {
     return res.status(500).send({ message: 'Internal server error' });

@@ -6,8 +6,9 @@ export const getProductById = async (id: string): Promise<IProduct | null> => {
     const product = await Product.findById(id);
     if (!product) {
       return null;
+    } else {
+      return product;
     }
-    return product;
   } catch (error) {
     console.error('Error during fetching productId process :', error);
     throw error;
