@@ -9,6 +9,10 @@ export const createProduct = async (
   try {
     const productInfos: IProduct = req.body;
 
+    const user = req;
+
+    console.log(user, 'user');
+
     const { name, quantity } = productInfos;
 
     const missingRequiredInformation = await product_create_services.missingRequiredInformation(productInfos);

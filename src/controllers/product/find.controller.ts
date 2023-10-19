@@ -6,8 +6,13 @@ export const getProductById = async (
   req: Request,
   res: Response,
 ): Promise<Response<IProduct, Record<string, unknown>>> => {
-  const productId = req.params.id;
   try {
+    const productId = req.params.id;
+
+    if (!productId) {
+      return res.status(400).json({ message: 'You need to provide an Id!' });
+    }
+
     const product: IProduct = await product_get_by_id_services.getProductById(productId);
 
     if (!product) {
