@@ -5,7 +5,8 @@ import { userRegister } from '../controllers/user/register.controller';
 import { userLogin } from '../controllers/user/login.controller';
 import { IUser } from 'types/user.type';
 import { verifiedUser } from '../middlewares/verified_user.middleware';
-import { getUser } from '../controllers/user/get-user.controller';
+import { getUser } from '../controllers/user/find.controller';
+import { getAllUsers } from '../controllers/user/list.controller';
 
 const userRouter = express.Router();
 
@@ -17,6 +18,7 @@ userRouter.get('/user/admin-only', isAdmin, (req: Request & { user?: IUser }, re
 });
 
 userRouter.get('/user/:id', verifiedUser, getUser);
+userRouter.get('/users', isAdmin, getAllUsers);
 userRouter.post('/user/register', userRegister);
 userRouter.post('/user/login', userLogin);
 
