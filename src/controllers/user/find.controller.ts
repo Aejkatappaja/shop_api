@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { IUser } from '../../types/user.type';
-import user_get_by_id_services from '../../database/services/user/get';
+import user_get_services from '../../database/services/user/get';
 
 export const getUser = async (
   req: Request & { userId?: string },
@@ -14,7 +14,7 @@ export const getUser = async (
       return res.status(400).json({ message: 'Error about provided userId' });
     }
 
-    const user = await user_get_by_id_services.getUserById(userId);
+    const user = await user_get_services.getUserById(userId);
     if (user) {
       return res.status(201).json(user);
     } else return res.status(400).json({ message: 'Error during fetch user informations process!' });
