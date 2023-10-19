@@ -1,6 +1,6 @@
 import { IProduct } from '../../types/product.type';
 import { Request, Response } from 'express';
-import productService from '../../database/services/product.service';
+import { product_get_by_id_services } from '../../database/services/product';
 
 export const getProductById = async (
   req: Request,
@@ -8,7 +8,7 @@ export const getProductById = async (
 ): Promise<Response<IProduct, Record<string, unknown>>> => {
   const productId = req.params.id;
   try {
-    const product: IProduct = await productService.getProductId(productId);
+    const product: IProduct = await product_get_by_id_services.getProductById(productId);
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
