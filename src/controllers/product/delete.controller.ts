@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import Product from '../../database/models/product.model';
+import { product_get_by_id_services } from '../../database/services/product';
+import product_delete_by_id_services from '../../database/services/product/delete';
 
 export const deleteProduct = async (
   req: Request,
@@ -12,12 +13,16 @@ export const deleteProduct = async (
       return res.status(400).json({ message: 'You need to provide an Id!' });
     }
 
-    const product = await Product.findById(productId);
+    const product = await product_get_by_id_services.getProductById(productId);
     if (!product) {
       return res.status(401).json({ message: 'Product not found!' });
     } else {
-      await product.deleteOne();
-      return res.status(200).json({ message: 'Product successfully deleted!' });
+      const productDeleted = await product_delete_by_id_services.deleteProduct(productId);
+      if (productDeleted) {
+        return res.status(200).json({ message: 'Product successfully deleted!' });
+      } else {
+        return res.status(400).json({ message: 'Error during product deletion process!' });
+      }
     }
   } catch (error: unknown) {
     console.error(error);
