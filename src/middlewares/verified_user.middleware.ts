@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import User from '../database/models/user.model';
 
-export const isAbleToFetchInformations = (
+export const verifiedUser = (
   req: Request & { userId?: string },
   res: Response,
   next: NextFunction,
