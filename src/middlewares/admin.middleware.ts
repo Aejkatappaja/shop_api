@@ -9,7 +9,7 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction): void |
     const token = req.headers.authorization;
     if (!token) {
       if (!token) {
-        return res.status(401).json({ message: 'Token is missing' });
+        return res.status(401).json({ message: 'Authorization is missing' });
       }
     }
 
@@ -17,7 +17,7 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction): void |
 
     jwt.verify(accessToken, SECRET, async (err, decoded: JwtPayload | string): Promise<NextFunction | Response> => {
       if (err) {
-        return res.status(401).json({ message: 'Token is invalid' });
+        return res.status(401).json({ message: 'Invalid authorization informations' });
       }
 
       if (typeof decoded === 'string') {
