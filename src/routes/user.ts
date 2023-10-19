@@ -4,6 +4,8 @@ import { isAdmin } from '../middlewares/admin.middleware';
 import { userRegister } from '../controllers/user/register.controller';
 import { userLogin } from '../controllers/user/login.controller';
 import { IUser } from 'types/user.type';
+import { verifiedUser } from '../middlewares/verified_user.middleware';
+import { getUser } from '../controllers/user/get-user.controller';
 
 const userRouter = express.Router();
 
@@ -14,6 +16,7 @@ userRouter.get('/user/admin-only', isAdmin, (req: Request & { user?: IUser }, re
   return res.json({ message: 'Welcome, admin!' });
 });
 
+userRouter.get('/user/:id', verifiedUser, getUser);
 userRouter.post('/user/register', userRegister);
 userRouter.post('/user/login', userLogin);
 
