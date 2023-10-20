@@ -11,7 +11,7 @@ export const tokenGeneration = (id: string) => {
     }
     const token = jwt.sign({ id }, SECRET, { expiresIn: '30d' });
     return token;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during token genration process:', error);
     throw error;
   }
@@ -37,7 +37,7 @@ export const verifyAdminToken = async (token: string) => {
         }
       }
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('error on credentials checking process', error);
     throw error;
   }

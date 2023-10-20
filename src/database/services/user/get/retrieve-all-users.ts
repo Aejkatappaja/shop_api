@@ -7,7 +7,7 @@ export const getUsersList = async (): Promise<IUser[] | null> => {
     if (users) {
       return users;
     } else return null;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during fetching productId process :', error);
     throw error;
   }

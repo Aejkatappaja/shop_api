@@ -9,9 +9,9 @@ export const createProduct = async (
   try {
     const productInfos: IProduct = req.body;
 
-    const user = req;
+    // const user = req;
 
-    console.log(user, 'user');
+    // console.log(user, 'user');
 
     const { name, quantity } = productInfos;
 

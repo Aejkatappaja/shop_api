@@ -8,7 +8,7 @@ export const productAlreadyExists = async (name: string): Promise<IProduct | boo
       return true;
     }
     return false;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during product already exists process :', error);
     throw error;
   }

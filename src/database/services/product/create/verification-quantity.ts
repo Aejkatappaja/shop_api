@@ -6,7 +6,7 @@ export const wrongQuantity = async (quantity: number): Promise<IProduct | boolea
       return true;
     }
     return false;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during quantity verification input process :', error);
     throw error;
   }

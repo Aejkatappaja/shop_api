@@ -7,7 +7,7 @@ export const getUserById = async (id: string): Promise<IUser | null> => {
     if (user) {
       return user;
     } else return null;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during fetching productId process :', error);
     throw error;
   }

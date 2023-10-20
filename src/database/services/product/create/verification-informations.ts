@@ -8,7 +8,7 @@ export const missingRequiredInformation = async (productInfos: IProduct): Promis
       return true;
     }
     return false;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during product infos verification process :', error);
     throw error;
   }

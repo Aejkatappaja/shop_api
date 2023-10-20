@@ -29,9 +29,9 @@ export const userLogin = async (req: Request, res: Response): Promise<Response<s
 
     if (passwordMatches) {
       const createToken = await generateToken(userSuccessfullyRetrieved._id);
-      if (createToken) {
-        return res.status(200).json({ token: createToken });
-      }
+      if (!createToken) {
+        return res.status(400).json({ message: 'There is a problem with token generation process' });
+      } else return res.status(200).json({ token: createToken });
     } else {
       return res.status(409).json({ message: 'You provided wrong informations' });
     }

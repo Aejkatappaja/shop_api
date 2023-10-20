@@ -10,7 +10,7 @@ export const passwordVerification = async (
       return false;
     }
     return true;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during credentials verification infos:', error);
     throw error;
   }

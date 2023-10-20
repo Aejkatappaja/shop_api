@@ -10,7 +10,7 @@ export const newProductCreation = async (productInfos: IProduct): Promise<IProdu
       await newProduct.save();
       return newProduct;
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during product creation process :', error);
     throw error;
   }

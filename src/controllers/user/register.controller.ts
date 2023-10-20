@@ -22,7 +22,9 @@ export const userRegister = async (req: Request, res: Response): Promise<Respons
 
       if (correctPasswordFormat) {
         const passwordEncrypt = await encryptPassword(userInfos.password);
-        userInfos.password = passwordEncrypt;
+        if (passwordEncrypt) {
+          userInfos.password = passwordEncrypt;
+        } else return res.status(400).json({ message: 'password encryption process failed' });
       }
 
       const newUserCreated = await user_register_services.newUserCreation(userInfos);

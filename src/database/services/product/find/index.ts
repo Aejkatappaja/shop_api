@@ -9,7 +9,7 @@ export const getProductById = async (id: string): Promise<IProduct | null> => {
     } else {
       return product;
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error during fetching productId process :', error);
     throw error;
   }
