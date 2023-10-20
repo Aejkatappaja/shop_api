@@ -5,11 +5,13 @@ export const deleteProduct = async (id: string): Promise<boolean | null> => {
     if (!id) {
       return false;
     } else {
-      await Product.findByIdAndDelete(id);
-      return true;
+      const productDeleted = await Product.findByIdAndDelete(id);
+      if (!productDeleted) {
+        return null;
+      } else return true;
     }
-  } catch (error) {
-    console.error('Error during fetching productId process :', error);
+  } catch (error: unknown) {
+    console.error('Error during delete product process :', error);
     throw error;
   }
 };
