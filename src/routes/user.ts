@@ -7,6 +7,7 @@ import { IUser } from 'types/user.type';
 import { verifiedUser } from '../middlewares/verified_user.middleware';
 import { getUser } from '../controllers/user/find.controller';
 import { getAllUsers } from '../controllers/user/list.controller';
+import { deleteUser } from '../controllers/user/delete.controller';
 
 const userRouter = express.Router();
 
@@ -17,9 +18,10 @@ userRouter.get('/user/admin-only', isAdmin, (req: Request & { user?: IUser }, re
   return res.json({ message: 'Welcome, admin!' });
 });
 
-userRouter.get('/user/:id', verifiedUser, getUser);
-userRouter.get('/users', isAdmin, getAllUsers);
 userRouter.post('/user/register', userRegister);
 userRouter.post('/user/login', userLogin);
+userRouter.get('/user/:id', verifiedUser, getUser);
+userRouter.get('/users', isAdmin, getAllUsers);
+userRouter.delete('/user/delete/:id', verifiedUser, deleteUser);
 
 export default userRouter;
