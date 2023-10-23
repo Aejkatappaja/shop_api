@@ -12,7 +12,7 @@ export const getProducts = async (
     if (!productList || productList.length === 0) {
       return res.status(404).json({ message: 'No products found in DB' });
     } else {
-      return res.status(200).send({ productList });
+      return res.status(200).send(productList);
     }
   } catch (error: unknown) {
     return res.status(500).send({ message: 'Internal server error' });
