@@ -20,7 +20,8 @@ userRouter.get('/user/admin-only', isAdmin, (req: Request & { user?: IUser }, re
 
 userRouter.post('/user/register', userRegister);
 userRouter.post('/user/login', userLogin);
-userRouter.get('/user/:id', verifiedUser, getUser);
+userRouter.get('/user', verifiedUser, getUser);
+// userRouter.get('/user/:id', isAdmin, AdminGetUser);
 userRouter.get('/users', isAdmin, getAllUsers);
 userRouter.delete('/user/delete/:id', verifiedUser, deleteUser);
 
