@@ -8,7 +8,6 @@ export const getUser = async (
 ): Promise<Response<IUser, Record<string, unknown>>> => {
   try {
     const { userId } = req;
-    console.log(userId);
 
     if (!userId) {
       return res.status(400).json({ message: 'Error about provided userId' });
