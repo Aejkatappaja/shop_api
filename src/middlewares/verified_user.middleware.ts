@@ -26,13 +26,9 @@ export const verifiedUser = (
         return;
       } else {
         const user = await User.findById((decoded as JwtPayload).id);
-        const isAdmin = user.role === 'Admin';
 
         if (!user) {
           return res.status(403).json({ message: 'Insufficient permissions' });
-        }
-        if (user._id !== req.userId && !isAdmin) {
-          return res.status(403).json({ message: 'Access denied. You have not the right access.' });
         }
 
         req.userId = user._id;
