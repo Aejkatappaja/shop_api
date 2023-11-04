@@ -15,9 +15,11 @@ const server = http.createServer(app);
 
 import productRouter from './routes/product';
 import userRouter from './routes/user';
+import adminRouter from './routes/admin';
 
 app.use(productRouter);
 app.use(userRouter);
+app.use(adminRouter);
 
 app.get('/', (req: Request, res: Response) => {
   return res.send('Welcome to my API !');
