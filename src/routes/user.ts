@@ -6,7 +6,6 @@ import { userLogin } from '../controllers/user/login.controller';
 import { IUser } from 'types/user.type';
 import { verifiedUser } from '../middlewares/verified_user.middleware';
 import { getUser } from '../controllers/user/find.controller';
-import { getAllUsers } from '../controllers/user/list.controller';
 import { deleteUser } from '../controllers/user/delete.controller';
 
 const userRouter = express.Router();
@@ -22,7 +21,6 @@ userRouter.post('/user/register', userRegister);
 userRouter.post('/user/login', userLogin);
 userRouter.get('/user', verifiedUser, getUser);
 // userRouter.get('/user/:id', isAdmin, AdminGetUser);
-userRouter.get('/users', isAdmin, getAllUsers);
 userRouter.delete('/user/delete', verifiedUser, deleteUser);
 
 export default userRouter;
