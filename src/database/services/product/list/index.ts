@@ -6,7 +6,9 @@ const getAllProducts = async (): Promise<IProduct[] | null> => {
     const products = await Product.find().sort({ brand: 1 });
     if (!products) {
       return null;
-    } else return products;
+    } else {
+      return products;
+    }
   } catch (error: unknown) {
     console.error('Error during products fetching process :', error);
     throw error;
