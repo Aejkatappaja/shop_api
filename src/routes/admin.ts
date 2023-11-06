@@ -4,6 +4,8 @@ import { getAllUsers } from '../controllers/user/list.controller';
 
 const adminRouter = express.Router();
 
-adminRouter.get('/users', isAdmin, getAllUsers);
+adminRouter.use(isAdmin);
+
+adminRouter.get('/users', getAllUsers);
 
 export default adminRouter;
