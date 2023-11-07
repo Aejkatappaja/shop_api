@@ -16,13 +16,27 @@
 import User from '../../../models/user.model';
 import { IUser } from '../../../../types/user.type';
 
-export const getUsersList = async (page?: number): Promise<{ users: IUser[]; total: number } | null> => {
+export const getUsersList = async (
+  page?: number,
+  query?: string,
+): Promise<{ users: IUser[]; total: number } | null> => {
   try {
     const perPage = 5;
     const skip = (page - 1) * perPage;
     const total = await User.countDocuments();
+    let filter;
+    if (query) {
+      filter = {
+        $or: [
+          { email: { $regex: query, $options: 'i' } },
+          { firstName: { $regex: query, $options: 'i' } },
+          { lastName: { $regex: query, $options: 'i' } },
+          { role: { $regex: query, $options: 'i' } },
+        ],
+      };
+    }
 
-    const users = await User.find()
+    const users = await User.find(filter)
       .select('-password -__v')
       .sort({ createdAt: -1 })
       .skip(skip)
