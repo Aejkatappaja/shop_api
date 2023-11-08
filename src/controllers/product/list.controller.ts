@@ -6,10 +6,17 @@ export const getProducts = async (
   req: Request,
   res: Response,
 ): Promise<Response<IProduct[], Record<string, unknown>>> => {
-  try {
-    const productList = await product_get_all_services.getAllProducts();
+  const { page } = req.query;
+  let query = req.query.query as string;
+  const currentPage = Number(page);
 
-    if (!productList || productList.length === 0) {
+  try {
+    if (Array.isArray(query)) {
+      query = query[0];
+    }
+    const productList = await product_get_all_services.getAllProducts(currentPage, query);
+
+    if (!productList || productList.products.length === 0) {
       return res.status(404).json({ message: 'No products found in DB' });
     } else {
       return res.status(200).send(productList);
