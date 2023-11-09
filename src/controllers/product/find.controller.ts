@@ -18,7 +18,7 @@ export const getProductById = async (
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     } else {
-      return res.status(200).send({ product });
+      return res.status(201).send(product);
     }
   } catch (error: unknown) {
     return res.status(500).send({ message: 'Internal server error' });
