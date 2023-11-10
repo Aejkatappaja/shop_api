@@ -18,7 +18,8 @@ const getAllProducts = async (
     const products = await Product.find(filter)
       .sort({ brand: 1 })
       .skip(skip)
-      .limit(page ? perPage : null);
+      .limit(page ? perPage : null)
+      .select('-__v');
     if (!products) {
       return null;
     } else {
