@@ -16,7 +16,7 @@ export const getProducts = async (
     }
     const productList = await product_get_all_services.getAllProducts(currentPage, query);
 
-    if (!productList || productList.products.length === 0) {
+    if (!productList || !productList.products.length) {
       return res.status(404).json({ message: 'No products found in DB' });
     } else {
       return res.status(200).send(productList);
