@@ -4,10 +4,10 @@ import { missingRequiredInformation } from './verification-informations';
 import { productAlreadyExists } from './verification-product-existence';
 
 const product_create_services = {
-  newProductCreation,
-  wrongQuantity,
-  missingRequiredInformation,
-  productAlreadyExists,
+  creation: newProductCreation,
+  verify_quantity: wrongQuantity,
+  verify_informations: missingRequiredInformation,
+  verify_existence: productAlreadyExists,
 };
 
 export default product_create_services;
