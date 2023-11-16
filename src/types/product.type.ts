@@ -1,3 +1,5 @@
+import { Document } from 'mongoose';
+
 export interface IProduct extends Document {
   brand: string;
   name: string;

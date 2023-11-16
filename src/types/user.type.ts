@@ -1,3 +1,5 @@
+import { Document } from 'mongoose';
+
 export interface IUserLogin {
   email: string;
   password: string;
