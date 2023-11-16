@@ -1,8 +1,6 @@
 import mongoose, { Model, Schema } from 'mongoose';
 import { IUser } from 'types/user.type';
 
-export interface IUsertModel extends IUser, Document {}
-
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },

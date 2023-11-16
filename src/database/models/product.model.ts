@@ -2,8 +2,6 @@ import mongoose, { Model } from 'mongoose';
 import { IProduct } from 'types/product.type';
 import SKU from '../../utils/sku-generator';
 
-export interface IProductModel extends IProduct, Document {}
-
 const productSchema = new mongoose.Schema({
   brand: { type: String, required: true },
   name: { type: String, required: true },

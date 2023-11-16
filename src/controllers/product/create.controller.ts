@@ -9,32 +9,28 @@ export const createProduct = async (
   try {
     const productInfos: IProduct = req.body;
 
-    // const user = req;
-
-    // console.log(user, 'user');
-
     const { name, quantity } = productInfos;
 
-    const missingRequiredInformation = await product_create_services.missingRequiredInformation(productInfos);
+    const missingRequiredInformation = await product_create_services.verify_informations(productInfos);
 
     if (missingRequiredInformation) {
       return res.status(400).json({ message: 'You need to provide all the required informations' });
     }
 
-    const productAlreadyExists = await product_create_services.productAlreadyExists(name);
+    const productAlreadyExists = await product_create_services.verify_existence(name);
 
     if (productAlreadyExists) {
       return res.status(409).json({ message: 'Product with the same name already exists!' });
     }
 
-    const wrongQuantity = await product_create_services.wrongQuantity(quantity);
+    const wrongQuantity = await product_create_services.verify_quantity(quantity);
 
     if (wrongQuantity) {
       return res.status(400).json({
         message: 'Invalid product quantity. Quantity must be greater than or equal to 1.',
       });
     } else {
-      const newProductCreated = await product_create_services.newProductCreation(productInfos);
+      const newProductCreated = await product_create_services.creation(productInfos);
       if (newProductCreated) {
         return res.status(201).json(newProductCreated);
       } else {

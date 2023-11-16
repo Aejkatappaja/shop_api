@@ -3,13 +3,9 @@ import Product from '../../../../database/models/product.model';
 
 export const newProductCreation = async (productInfos: IProduct): Promise<IProduct | null> => {
   try {
-    if (!productInfos) {
-      return null;
-    } else {
-      const newProduct = new Product(productInfos);
-      await newProduct.save();
-      return newProduct;
-    }
+    const newProduct = new Product(productInfos);
+    await newProduct.save();
+    return newProduct;
   } catch (error: unknown) {
     console.error('Error during product creation process :', error);
     throw error;
