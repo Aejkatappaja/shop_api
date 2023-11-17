@@ -16,11 +16,7 @@ export const getProducts = async (
     }
     const productList = await product_get_all_services.getAllProducts(currentPage, query);
 
-    if (!productList || !productList.products.length) {
-      return res.status(404).json({ message: 'No products found in DB' });
-    } else {
-      return res.status(200).send(productList);
-    }
+    return res.status(200).send(productList);
   } catch (error: unknown) {
     return res.status(500).send({ message: 'Internal server error' });
   }
