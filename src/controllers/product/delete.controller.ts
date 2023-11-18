@@ -21,7 +21,7 @@ export const deleteProduct = async (
       if (!deletedProduct) {
         return res.status(401).json({ message: 'Error during product deletion process.' });
       } else {
-        return res.status(200).json({ message: 'Product successfully deleted!' });
+        return res.status(200).json({ status: 200, message: `Product ${product.name} successfully deleted!` });
       }
     }
   } catch (error: unknown) {
