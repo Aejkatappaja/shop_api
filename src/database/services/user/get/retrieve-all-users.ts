@@ -38,7 +38,7 @@ export const getUsersList = async (
 
     const users = await User.find(filter)
       .select('-password -__v')
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: 1 })
       .skip(skip)
       .limit(page ? perPage : null);
 
