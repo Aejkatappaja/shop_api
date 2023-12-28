@@ -7,9 +7,10 @@ import { deleteUser } from '../controllers/user/delete.controller';
 
 const userRouter = express.Router();
 
-userRouter.post('/user/register', userRegister);
-userRouter.post('/user/login', userLogin);
-userRouter.get('/user', verifiedUser, getUser);
-userRouter.delete('/user/delete', verifiedUser, deleteUser);
+userRouter
+  .post('/user/login', userLogin)
+  .post('/user/register', userRegister)
+  .get('/user', verifiedUser, getUser)
+  .delete('/user/delete', verifiedUser, deleteUser);
 
 export default userRouter;
